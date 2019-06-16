@@ -6,9 +6,12 @@ let alignSlider, cohesionSlider, separationSlider;
 
 
 function setup() {
-  createCanvas(1000,800);
+  // Fill the whole window as the canvas.
+  createCanvas(windowWidth,windowHeight);
+
+  // Font options
   textFont("Calibri Light");
-  textSize(width/50);
+  textSize(20);
   
   // Create sliders to change force of alignment, cohesion, and separation.
   alignSlider = createSlider(0,5,1,0.1);
@@ -53,4 +56,9 @@ function mouseClicked() {
   if (flock.length < maxBoids) {
     flock.push(new Boid(mouseX, mouseY));
   }
+}
+
+// Support resizing of the window
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }

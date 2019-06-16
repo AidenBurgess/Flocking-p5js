@@ -11,13 +11,13 @@ class Boid{
   edges() {
   if(this.position.x>width) {
     this.position.x = 0;
-  }else if(this.position.x < 0) {
+  } else if(this.position.x < 0) {
     this.position.x = width;
-  }else if(this.position.y>height) {
+  } else if(this.position.y>height) {
     this.position.y = 0;
-  }else if(this.position.y < 0) {
+  } else if(this.position.y < 0) {
     this.position.y = height;
-  }
+  	}
   }
  
   
@@ -110,7 +110,7 @@ class Boid{
     
     if (total>0) {
       steering.div(total);
-      steering.setMag(this.maxSpeed);
+      steering.setMag(this.maxSpeed*2);
       steering.sub(this.velocity);
       steering.limit(this.maxForce*2);
       return steering;
