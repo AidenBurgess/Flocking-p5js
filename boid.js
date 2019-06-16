@@ -1,6 +1,6 @@
 class Boid{
-  constructor() {
-    this.position = createVector(random(width),random(height));
+  constructor(x = random(width), y = random(height)) {
+    this.position = createVector(x, y);
     this.velocity = p5.Vector.random2D();
     this.velocity.setMag(random(2,4.5));
     this.acceleration = createVector();
@@ -95,7 +95,7 @@ class Boid{
   }
   
   externalForce(boids) {
-   let perceptionRadius = 300;
+   let perceptionRadius = 200;
    let total = 0;
    let steering = createVector();
    let mousePosition = createVector(mouseX, mouseY);
