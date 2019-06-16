@@ -1,11 +1,11 @@
 class Boid{
   constructor(x = random(width), y = random(height)) {
-    this.position = createVector(x, y);
-    this.velocity = p5.Vector.random2D();
-    this.velocity.setMag(random(2,4.5));
-    this.acceleration = createVector();
     this.maxForce = 0.2;
     this.maxSpeed = 8;
+    this.position = createVector(x, y);
+    this.velocity = p5.Vector.random2D();
+    this.velocity.setMag(this.maxSpeed);
+    this.acceleration = createVector();
   }
   
   // Infinite canvas, so have boids loop around when going out of bounds.

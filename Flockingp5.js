@@ -3,6 +3,7 @@ const numBoids = 100;
 const maxBoids = 160;
 
 let alignSlider, cohesionSlider, separationSlider;
+var myDiv;
 
 
 function setup() {
@@ -16,6 +17,7 @@ function setup() {
   // Create sliders to change force of alignment, cohesion, and separation.
   alignSlider = createSlider(0,5,1,0.1);
   alignSlider.position(20,20);
+  
   
   cohesionSlider = createSlider(0,5,1,0.1);
   cohesionSlider.position(20,50);
@@ -50,6 +52,7 @@ function draw() {
   text('Alignment', alignSlider.x * 2 + alignSlider.width, alignSlider.y + 15);
   text('Cohesion', cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 15);
   text('Separation', separationSlider.x * 2 + separationSlider.width, separationSlider.y + 15);
+  alignSlider.style('background-color', color(255));
 }
 
 // Add new boids when the mouse is dragged
