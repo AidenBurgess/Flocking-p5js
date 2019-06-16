@@ -23,6 +23,7 @@ function setup() {
   separationSlider = createSlider(0,5,1,0.1);
   separationSlider.position(20,80);
   
+  // Create initial batch of boids
   for(let i = 0; i < numBoids; i++) {
     flock.push(new Boid());
   }

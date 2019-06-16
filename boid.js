@@ -8,6 +8,7 @@ class Boid{
     this.maxSpeed = 8;
   }
   
+  // Infinite canvas, so have boids loop around when going out of bounds.
   edges() {
   if(this.position.x>width) {
     this.position.x = 0;
@@ -20,7 +21,7 @@ class Boid{
   	}
   }
  
-  
+  // Update the position and velocity of the boid, and reset the acceleration.
   update() {
     this.position.add(this.velocity);
     this.velocity.add(this.acceleration);
@@ -28,6 +29,7 @@ class Boid{
     this.acceleration.mult(0);
   }
   
+  // Force boid in the same direction nearby boids are heading
   align(boids) {
     let perceptionRadius = 50;
     let total = 0;
@@ -49,6 +51,7 @@ class Boid{
     return steering;
   }
   
+  // Forces boid to average position of nearby boids
   cohesion(boids) {
    let perceptionRadius = 50;
    let total = 0;
@@ -71,8 +74,9 @@ class Boid{
     return steering;
   }
   
+  // Forces boid away from nearby boids
   separation(boids) {
-   let perceptionRadius = 50;
+   let perceptionRadius = 30;
    let total = 0;
    let steering = createVector();
    for (let other of boids) {
@@ -94,6 +98,7 @@ class Boid{
     return steering;
   }
   
+  // Forces boid away from the mouse cursor
   externalForce(boids) {
    let perceptionRadius = 200;
    let total = 0;
@@ -117,7 +122,11 @@ class Boid{
     }
     return steering;
   }
-  
+
+  /**
+  * Calculates the total acceleration of the boid based on the alignment,
+  * cohesion, separation, and external forces.
+  */
   flock(boids) {
     this.acceleration.mult(0);
     let alignment = this.align(boids);
@@ -135,6 +144,7 @@ class Boid{
     this.acceleration.add(this.externalForce(boids));
   }
   
+  // Render the boid as two circles, one as the main body and the other indicating direction.
   show() {
     strokeWeight(16);
     stroke(255);
