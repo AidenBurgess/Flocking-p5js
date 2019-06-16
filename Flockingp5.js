@@ -32,7 +32,13 @@ function draw() {
     boid.update();
     boid.show();
   }
+  
+  // Add border around sliders
   noStroke();
+  fill(51);
+  rect(10,10, 250, 100);
+  
+  
   fill(255);
   text('Alignment', alignSlider.x * 2 + alignSlider.width, alignSlider.y + 15);
   text('Cohesion', cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 15);
