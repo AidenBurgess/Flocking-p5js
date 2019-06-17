@@ -1,6 +1,6 @@
 const flock = [];
-const numBoids = 80;
-const maxBoids = 150;
+const numBoids = 100;
+const maxBoids = 180;
 
 let alignSlider, cohesionSlider, separationSlider;
 

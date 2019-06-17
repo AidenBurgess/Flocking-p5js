@@ -31,7 +31,8 @@ class Boid{
 
   getNearbyBoids(boids, radius) {
     let nearby = []
-    for (let other of boids) {
+    for (let i = 0; i < boids.length; i++) {
+      let other = boids[i];
       let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
       if (d < radius && other != this) {
         nearby.push(other);
@@ -135,11 +136,10 @@ class Boid{
   */
   flock(boids) {
     let within_50 = this.getNearbyBoids(boids, 50);
-    let within_30 = this.getNearbyBoids(boids, 30);
 
     let alignment = this.align(within_50);
     let cohesion = this.cohesion(within_50);
-    let separation = this.separation(within_30);
+    let separation = this.separation(within_50);
     
     alignment.mult(alignSlider.value());
     cohesion.mult(cohesionSlider.value());
@@ -147,7 +147,7 @@ class Boid{
     
     
     this.acceleration.add(alignment);
-    this.acceleration.add(alignment);
+    this.acceleration.add(cohesion);
     this.acceleration.add(separation);
     this.acceleration.add(this.externalForce());
   }
