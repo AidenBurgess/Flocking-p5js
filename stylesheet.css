@@ -94,7 +94,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 /***********BUTTON***********/
 button {
-  background-color: rgba(130,168,229,150);
+  background-color: rgba(100,178,255,250);
   border: none;
   color: white;
   padding: 10px 20px;
