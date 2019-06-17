@@ -2,6 +2,11 @@ const flock = [];
 const numBoids = 100;
 const maxBoids = 180;
 
+const settingsX = 10;
+const settingsY = 10;
+const settingsW = 250;
+const settingsH = 150;
+
 let alignSlider, cohesionSlider, separationSlider, toggleMouseMode;
 
 function setup() {
@@ -47,7 +52,7 @@ function draw() {
   // Add border around sliders
   noStroke();
   fill(51);
-  rect(10,10, 250, 130);
+  rect(settingsX, settingsY, settingsW, settingsH);
   
   // Display slider labels
   fill(255);
@@ -59,8 +64,17 @@ function draw() {
 
 // Add new boids when the mouse is dragged
 function mouseClicked() {
-  if (flock.length < maxBoids) {
-    flock.push(new Boid(mouseX, mouseY));
+  // Detect that the mouse is not within the settings box
+  if (
+    !(mouseX > settingsX - settingsW) ||
+    !(mouseX < settingsX + settingsW) ||
+    !(mouseY > settingsY - settingsH) ||
+    !(mouseY < settingsY + settingsH)
+  ) {
+    if (flock.length < maxBoids) {
+      flock.push(new Boid(mouseX, mouseY));
+      console.log("New boid added")
+    }
   }
 }
 
