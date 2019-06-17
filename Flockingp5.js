@@ -2,7 +2,7 @@ const flock = [];
 const numBoids = 100;
 const maxBoids = 180;
 
-let alignSlider, cohesionSlider, separationSlider;
+let alignSlider, cohesionSlider, separationSlider, toggleMouseMode;
 
 function setup() {
   // Fill the whole window as the canvas.
@@ -22,7 +22,11 @@ function setup() {
 
   separationSlider = createSlider(0,5,1,0.1);
   separationSlider.position(20,80);
-  
+
+  // Create button to toggle between attract and repel
+  toggleMouseMode = createButton('Toggle Mouse Mode');
+  toggleMouseMode.position(40,110);
+  // toggleMouseMode.style('background-color', color(130,168,229,150));
   // Create initial batch of boids
   for(let i = 0; i < numBoids; i++) {
     flock.push(new Boid());
@@ -43,7 +47,7 @@ function draw() {
   // Add border around sliders
   noStroke();
   fill(51);
-  rect(10,10, 250, 100);
+  rect(10,10, 250, 130);
   
   // Display slider labels
   fill(255);
