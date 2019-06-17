@@ -132,7 +132,7 @@ class Boid{
 
   /**
   * Calculates the total acceleration of the boid based on the alignment,
-  * cohesion, separation, and external forces.
+  * cohesion, separation, and external force.
   */
   flock(boids) {
     let within_50 = this.getNearbyBoids(boids, 50);
