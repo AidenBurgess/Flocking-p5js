@@ -154,11 +154,11 @@ class Boid{
   
   // Render the boid as two circles, one as the main body and the other indicating direction.
   show() {
-    strokeWeight(16);
+    strokeWeight(20);
     stroke(255);
     this.edges();
     point(this.position.x, this.position.y);
-    strokeWeight(10);
+    strokeWeight(12);
     line(this.position.x, this.position.y, this.position.x + this.velocity.x, this.position.y + this.velocity.y);
   }
 }
