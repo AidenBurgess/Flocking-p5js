@@ -3,8 +3,6 @@ const numBoids = 100;
 const maxBoids = 160;
 
 let alignSlider, cohesionSlider, separationSlider;
-var myDiv;
-
 
 function setup() {
   // Fill the whole window as the canvas.
@@ -66,3 +64,4 @@ function mouseClicked() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+

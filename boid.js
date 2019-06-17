@@ -28,21 +28,32 @@ class Boid{
     this.velocity.limit(this.maxSpeed);
     this.acceleration.mult(0);
   }
+
+  getNearbyBoids(boids, radius) {
+    let nearby = []
+    for (let other of boids) {
+      let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+      if (d < radius && other != this) {
+        nearby.push(other);
+      }
+    }
+    return nearby;
+  }
   
   // Force boid in the same direction nearby boids are heading
   align(boids) {
-    let perceptionRadius = 50;
-    let total = 0;
     let steering = createVector();
+
+    if (boids == null) {
+      return steering;
+    }
+
     for (let other of boids) {
       let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
-      if (d < perceptionRadius && other != this) {
-        steering.add(other.velocity);
-        total++;
-      }
+      steering.add(other.velocity);      
     }
-    if (total>0) {
-      steering.div(total);
+    if (boids.length>0) {
+      steering.div(boids.length);
       steering.setMag(this.maxSpeed);
       steering.sub(this.velocity);
       steering.limit(this.maxForce);
@@ -53,18 +64,19 @@ class Boid{
   
   // Forces boid to average position of nearby boids
   cohesion(boids) {
-   let perceptionRadius = 50;
-   let total = 0;
    let steering = createVector();
-   for (let other of boids) {
-     let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
-     if (d < perceptionRadius && other != this) {
-       steering.add(other.position);
-       total++;
-      }
+
+    if (boids == null) {
+      return steering;
     }
-    if (total>0) {
-      steering.div(total);
+
+   for (let other of boids) {
+    let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+    steering.add(other.position);
+    }
+
+    if (boids.length>0) {
+      steering.div(boids.length);
       steering.sub(this.position);
       steering.setMag(this.maxSpeed);
       steering.sub(this.velocity);
@@ -76,20 +88,20 @@ class Boid{
   
   // Forces boid away from nearby boids
   separation(boids) {
-   let perceptionRadius = 30;
-   let total = 0;
    let steering = createVector();
+
+   if (boids == null) {
+      return steering;
+    }
    for (let other of boids) {
      let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
-     if (d < perceptionRadius && other != this) {
-       let diff = p5.Vector.sub(this.position, other.position);
-       diff.div(d);
-       steering.add(diff);
-       total++;
-      }
+     let diff = p5.Vector.sub(this.position, other.position);
+     diff.div(d);
+     steering.add(diff);
     }
-    if (total>0) {
-      steering.div(total);
+
+    if (boids.length>0) {
+      steering.div(boids.length);
       steering.setMag(this.maxSpeed);
       steering.sub(this.velocity);
       steering.limit(this.maxForce);
@@ -99,27 +111,21 @@ class Boid{
   }
   
   // Forces boid away from the mouse cursor
-  externalForce(boids) {
-   let perceptionRadius = 200;
-   let total = 0;
-   let steering = createVector();
-   let mousePosition = createVector(mouseX, mouseY);
-   
-   let d = dist(this.position.x, this.position.y, mouseX, mouseY);
-   if (d < perceptionRadius) {
+  externalForce() {
+    let perceptionRadius = 200;
+    let steering = createVector();
+    let mousePosition = createVector(mouseX, mouseY);
+
+    let d = dist(this.position.x, this.position.y, mouseX, mouseY);
+    if (d < perceptionRadius) {
      let diff = p5.Vector.sub(this.position, mousePosition);
      diff.div(d);
      steering.add(diff);
-     total++;
-    }
-    
-    if (total>0) {
-      steering.div(total);
       steering.setMag(this.maxSpeed*2);
       steering.sub(this.velocity);
       steering.limit(this.maxForce*2);
-      return steering;
     }
+
     return steering;
   }
 
@@ -128,10 +134,12 @@ class Boid{
   * cohesion, separation, and external forces.
   */
   flock(boids) {
-    this.acceleration.mult(0);
-    let alignment = this.align(boids);
-    let cohesion = this.cohesion(boids);
-    let separation = this.separation(boids);
+    let within_50 = this.getNearbyBoids(boids, 50);
+    let within_30 = this.getNearbyBoids(boids, 30);
+
+    let alignment = this.align(within_50);
+    let cohesion = this.cohesion(within_50);
+    let separation = this.separation(within_30);
     
     alignment.mult(alignSlider.value());
     cohesion.mult(cohesionSlider.value());
@@ -141,7 +149,7 @@ class Boid{
     this.acceleration.add(alignment);
     this.acceleration.add(alignment);
     this.acceleration.add(separation);
-    this.acceleration.add(this.externalForce(boids));
+    this.acceleration.add(this.externalForce());
   }
   
   // Render the boid as two circles, one as the main body and the other indicating direction.
