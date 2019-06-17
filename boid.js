@@ -159,6 +159,6 @@ class Boid{
     this.edges();
     point(this.position.x, this.position.y);
     strokeWeight(12);
-    line(this.position.x, this.position.y, this.position.x + this.velocity.x, this.position.y + this.velocity.y);
+    line(this.position.x, this.position.y, this.position.x - this.velocity.x, this.position.y - this.velocity.y);
   }
 }
