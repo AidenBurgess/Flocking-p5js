@@ -158,7 +158,11 @@ class Boid{
     stroke(255);
     this.edges();
     point(this.position.x, this.position.y);
-    strokeWeight(12);
-    line(this.position.x, this.position.y, this.position.x - this.velocity.x, this.position.y - this.velocity.y);
+
+    // Draw a tadpole-like shape
+    for (let i = 0; i < 18; i += 2) {
+      strokeWeight(i);
+      point(this.position.x - this.velocity.x * (20-i) * 0.15, this.position.y - this.velocity.y * (20-i) * 0.15);
+    }
   }
 }
