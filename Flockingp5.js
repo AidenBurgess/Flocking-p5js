@@ -6,7 +6,7 @@ const sliderStartX = 150;
 const settingsX = 10;
 const settingsY = 10;
 const settingsW = 250;
-const settingsH = 150;
+const settingsH = 210;
 
 let alignSlider, cohesionSlider, separationSlider, toggleMouseMode;
 let attractionMode = -1;
@@ -29,15 +29,18 @@ function setup() {
   separationSlider = createSlider(0,5,1,0.1);
   separationSlider.position(sliderStartX,80);
 
-  // Create button to toggle between attract and repel
+  // Create checkbox to toggle between attract and repel
   toggleMouseMode = createCheckbox('Label', false);
   toggleMouseMode.position(200,110);
   toggleMouseMode.changed(toggleAttraction);
 
+
+  restartButton = createButton('Restart');
+  restartButton.position(20,150);
+  restartButton.mousePressed(initialiseBoids);
+
   // Create initial batch of boids
-  for(let i = 0; i < numBoids; i++) {
-    flock.push(new Boid());
-  }
+  initialiseBoids();
 }
 
 
@@ -98,4 +101,14 @@ function toggleAttraction() {
     console.log("Repulsion");
   }
   
+}
+
+function initialiseBoids() {
+  while(flock.length > 0) {
+    flock.pop();
+  }
+
+  for(let i = 0; i < numBoids; i++) {
+    flock.push(new Boid());
+  }
 }
