@@ -113,7 +113,7 @@ button:hover {
 button:active {
   -webkit-transition-duration: 0.05s;
   transition-duration: 0.05s;
-  background-color: #3e8e41;
+  background-color: #42ce40;
   transform: translateY(4px);
 }
 
@@ -148,7 +148,7 @@ label:after {
 }
 
 input:checked + label {
-  background: #bada55;
+  background: #42ce40;
 }
 
 input:checked + label:after {
