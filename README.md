@@ -1,5 +1,5 @@
 # Flocking   
-<img src="https://user-images.githubusercontent.com/5440199/59597147-4a812e00-914d-11e9-85f2-e06770628f41.PNG" width="85%"></img>   
+<img src="https://user-images.githubusercontent.com/5440199/59647254-958f5580-91ce-11e9-83d7-cc9527ca4cdc.PNG" width="90%"></img>    
 This p5js project demonstrates flocking, which is a behaviour that many animals express.   
 It consists of alignment, cohesion, and separation. I have also added an external force which repels the boids away from the mouse.  
 Click to add new boids to the screen.   
