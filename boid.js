@@ -72,8 +72,8 @@ class Boid{
     }
 
    for (let other of boids) {
-    let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
-    steering.add(other.position);
+      let d = dist(this.position.x, this.position.y, other.position.x, other.position.y);
+      steering.add(other.position);
     }
 
     if (boids.length>0) {
@@ -119,11 +119,12 @@ class Boid{
 
     let d = dist(this.position.x, this.position.y, mouseX, mouseY);
     if (d < perceptionRadius) {
-     let diff = p5.Vector.sub(this.position, mousePosition);
-     diff.div(d);
-     steering.add(diff);
+      let diff = p5.Vector.sub(mousePosition, this.position);
+      if (attractionMode == -1) {
+        diff = p5.Vector.sub(this.position, mousePosition);
+      }
+      steering.add(diff);
       steering.setMag(this.maxSpeed*2);
-      steering.sub(this.velocity);
       steering.limit(this.maxForce*2);
     }
 

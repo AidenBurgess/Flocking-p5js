@@ -1,6 +1,7 @@
 const flock = [];
-const numBoids = 100;
-const maxBoids = 180;
+const numBoids = 80;
+const maxBoids = 170;
+const sliderStartX = 150;
 
 const settingsX = 10;
 const settingsY = 10;
@@ -8,6 +9,7 @@ const settingsW = 250;
 const settingsH = 150;
 
 let alignSlider, cohesionSlider, separationSlider, toggleMouseMode;
+let attractionMode = -1;
 
 function setup() {
   // Fill the whole window as the canvas.
@@ -19,19 +21,19 @@ function setup() {
   
   // Create sliders to change force of alignment, cohesion, and separation.
   alignSlider = createSlider(0,5,1,0.1);
-  alignSlider.position(20,20);
-  
+  alignSlider.position(sliderStartX,20);
   
   cohesionSlider = createSlider(0,5,1,0.1);
-  cohesionSlider.position(20,50);
+  cohesionSlider.position(sliderStartX,50);
 
   separationSlider = createSlider(0,5,1,0.1);
-  separationSlider.position(20,80);
+  separationSlider.position(sliderStartX,80);
 
   // Create button to toggle between attract and repel
-  toggleMouseMode = createButton('Toggle Mouse Mode');
-  toggleMouseMode.position(40,110);
-  // toggleMouseMode.style('background-color', color(130,168,229,150));
+  toggleMouseMode = createCheckbox('Label', false);
+  toggleMouseMode.position(200,110);
+  toggleMouseMode.changed(toggleAttraction);
+
   // Create initial batch of boids
   for(let i = 0; i < numBoids; i++) {
     flock.push(new Boid());
@@ -52,14 +54,17 @@ function draw() {
   // Add border around sliders
   noStroke();
   fill(51);
-  rect(settingsX, settingsY, settingsW, settingsH);
+  rect(settingsX, settingsY, settingsW + 10, settingsH + 10);
   
   // Display slider labels
   fill(255);
-  text('Alignment', alignSlider.x * 2 + alignSlider.width, alignSlider.y + 15);
-  text('Cohesion', cohesionSlider.x * 2 + cohesionSlider.width, cohesionSlider.y + 15);
-  text('Separation', separationSlider.x * 2 + separationSlider.width, separationSlider.y + 15);
+  text('Alignment', 20, alignSlider.y + 17);
+  text('Cohesion', 20, cohesionSlider.y + 17);
+  text('Separation', 20, separationSlider.y + 17);
   alignSlider.style('background-color', color(255));
+  // text('Repulsion/Attraction', toggleMouseMode.x * 2 + toggleMouseMode.width, toggleMouseMode.y + 15);
+  text('Repulsion/Attraction', 20, 135);
+
 }
 
 // Add new boids when the mouse is dragged
@@ -71,6 +76,7 @@ function mouseClicked() {
     !(mouseY > settingsY - settingsH) ||
     !(mouseY < settingsY + settingsH)
   ) {
+    // Add a new boid to the screen
     if (flock.length < maxBoids) {
       flock.push(new Boid(mouseX, mouseY));
       console.log("New boid added")
@@ -83,3 +89,13 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+function toggleAttraction() {
+  if (this.checked()) {
+    attractionMode = 1;
+    console.log("Attraction");
+  } else {
+    attractionMode = -1;
+    console.log("Repulsion");
+  }
+  
+}
